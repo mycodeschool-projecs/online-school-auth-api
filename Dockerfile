@@ -2,9 +2,9 @@
 FROM openjdk:17-jdk-slim
 
 # Metadata as described above
-LABEL maintainer="floredenis907@yahoo.com"
+LABEL maintainer="mycodeschoolro@gmail.com"
 LABEL version="1.0"
-LABEL description="Docker image for query-service Spring Boot application"
+LABEL description="Docker image for online-school-auth-api Spring Boot application"
 
 # Set the current working directory inside the image
 WORKDIR /app

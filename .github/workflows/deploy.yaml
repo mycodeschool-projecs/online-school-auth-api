@@ -1,4 +1,4 @@
-name: CD - Deploy Auth-Server API
+name: CD - Deploy Online-School-Auth-Api
 
 on:
   push:
@@ -29,23 +29,23 @@ jobs:
       - name: Docker Build and push
         run: |
           chmod +x ci/build-publish.sh
-          USERNAME=floredenis2001 \
-          REPO=courses-auth-service \
+          USERNAME=mycodeschool \
+          REPO=online-school-auth-api \
           TAG=${{ env.BUILD_NUMBER }} \
           ci/build-publish.sh ./
 
       - name: Checkout other repository
         uses: actions/checkout@v2
         with:
-          repository: 'FloreDenis2001/docker-compose-microservices'
+          repository: 'mycodeschool-projecs/online-school-docker'
           token: ${{ secrets.DEPLOY_ACCESS_TOKEN }}
-          path: 'docker-compose-microservices'
+          path: 'online-school-docker'
 
       - name: Update and commit app version in docker-compose.yml in other repository
         run: |
-          cd docker-compose-microservices/
+          cd online-school-docker/
           echo -e "Current ./docker-compose.yaml\n$(cat docker-compose.yaml)"
-          sed -i -E 's_(floredenis2001/courses-auth-service:)([^"]*)_\1'${{ env.BUILD_NUMBER }}'_' docker-compose.yaml
+          sed -i -E 's_(mycodeschool/online-school-auth-api:)([^"]*)_\1'${{ env.BUILD_NUMBER }}'_' docker-compose.yaml
           echo -e "Updated ./docker-compose.yaml\n$(cat docker-compose.yaml)"
           git config user.name github-actions
           git config user.email github-actions@github.com
