@@ -1,0 +1,92 @@
+spring:
+  application:
+    name: auth-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    show-sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/authservice_db?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+    username: root
+    password: Decembrie2001
+
+  jwt:
+    secretKey: asdasdasdasdasd123344asdasdasdasdasasd12321332sadas
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 7
+
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 8083
+
+logging:
+  level:
+    org.springframework.cloud.sleuth: DEBUG
+    org.springframework.web.client.RestTemplat: DEBUG
+
+metrics:
+  distribution:
+    percentiles-histogram:
+      http:
+        server:
+          request: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+    endpoint:
+      prometheus:
+        enabled: true
+
+  logging:
+    pattern:
+      level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+    level:
+      root: debug
+    file:
+      name: test.log
+
+logs:
+  destination: localhost:3100
+
+aws:
+  accessKey: 003d0e93f57cf100000000001
+  secretKey: K003A89C4XA2QmEjrtYvFSzC4UDbE1s
+  region: eu-central-003
+
+b2:
+  bucketName: online-school-platform
+
+
+
+stripe:
+  api:
+    key: sk_test_51Q4PIRLiVAqLby1DtZvaDnMsaoT8PBzS9VgNZtxM0O5TY6J2rAvb9bDNQOtCCmlhZPuBiuWejCNmD1BMRPIgwmOc00BmBtIMSD
+  public:
+    key: pk_test_51Q4PIRLiVAqLby1DcSBBSwXTSI5ZYy1wYnPelmkC3OhU9zF9USfEJtBCmhUmIogO8W0hJFdwQvf6R6W9YFi2NLeN00l718ElTJ
